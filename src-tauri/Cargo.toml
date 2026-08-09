@@ -1,0 +1,19 @@
+[package]
+name = "omnideck"
+version = "0.1.0"
+description = "A Windows desktop integration console"
+authors = ["OmniDeck contributors"]
+license = "UNLICENSED"
+repository = "https://github.com/zcw199604/OmniDeck"
+edition = "2021"
+rust-version = "1.77.2"
+
+[lib]
+name = "omnideck_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.6.3" }
+
+[dependencies]
+tauri = { version = "2.11.3" }

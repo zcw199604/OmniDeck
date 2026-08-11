@@ -1,0 +1,254 @@
+{
+  "schema_version": 3,
+  "qa_mode": "standard",
+  "scope": "单实例 CC Hub 管理控制台：受保护连接、provider 读取与受控写入入口、用户额度只读汇总、usage cursor 查询与轮询，以及 React 管理界面。",
+  "outcome": "findings",
+  "gate_status": "passed",
+  "conclusion": "前端自动化、类型检查、lint、production build、Rust 1.77.2 核心 test-code check、静态安全检查和授权的 provider PATCH 核验均通过。剩余未完成项是原生 Windows/Tauri GUI 与 credential store 验收；provider 写 UI 已解除运行时核验门控。",
+  "findings": [
+    {
+      "severity": "P2",
+      "status": "open",
+      "title": "原生 Tauri GUI 与 Windows credential store 验收待具备环境",
+      "evidence": "当前 Linux 容器缺少 pkg-config、GTK/WebKit 开发包且无免交互 sudo；Windows cross target 缺少 MSVC lib.exe。临时 pkg-config shim 仅用于核心 Rust 类型检查，已删除，不构成 GUI/链接验收。"
+    }
+  ],
+  "file_references": [
+    "src-tauri/src/cc_hub/",
+    "src/features/cc-hub/",
+    "src/App.tsx",
+    "src/App.css",
+    "tests/fixtures/cc-hub/",
+    "helloagents/wiki/modules/cc-hub-admin-console.md"
+  ],
+  "commands": [
+    {
+      "command": "npm test",
+      "result": "passed",
+      "note": "12 个测试文件、24 项测试全部通过。"
+    },
+    {
+      "command": "npm run lint",
+      "result": "passed",
+      "note": "oxlint 通过。"
+    },
+    {
+      "command": "npm run build",
+      "result": "passed",
+      "note": "tsc -b 与 Vite production build 通过。"
+    },
+    {
+      "command": "PKG_CONFIG=/tmp/omnideck-pkg-config PKG_CONFIG_ALLOW_CROSS=1 cargo +1.77.2 check --manifest-path src-tauri/Cargo.toml --tests --no-default-features",
+      "result": "passed",
+      "note": "Rust 1.77.2 核心代码和内嵌测试代码通过检查；临时 pkg-config shim 在命令后已删除。"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed",
+      "note": "无空白错误。"
+    },
+    {
+      "command": "GET /api/v1/providers?include=statistics; PATCH /api/v1/providers/{id} {is_enabled:false}; GET /api/v1/providers?include=statistics",
+      "result": "passed",
+      "note": "授权的停用、零调用非关键 provider 保持原状态；HTTP 200、响应 isEnabled:false、X-CCH-Undo-Token 和 X-CCH-Operation-Id 均存在，复读状态未变。目标标识和原始响应体未写入证据。"
+    },
+    {
+      "command": "rg -n \"localStorage|sessionStorage|fetch\\(\" src; rg -n \"ADMIN_TOKEN|CCHUB_ADMIN_TOKEN\" src src-tauri tests",
+      "result": "passed",
+      "note": "受检路径内没有前端持久化、直接 fetch 或管理员环境变量引用。"
+    },
+    {
+      "command": "curl -fsS -I http://127.0.0.1:1420/",
+      "result": "passed",
+      "note": "Vite 开发入口返回 HTTP 200。"
+    },
+    {
+      "command": "cargo test --manifest-path src-tauri/Cargo.toml",
+      "result": "blocked",
+      "note": "容器缺少 Linux GTK/WebKit 原生依赖；这不是通过 shim 可替代的 GUI 或链接验收。"
+    }
+  ],
+  "task_verification": [
+    {
+      "task": "0.1",
+      "status": "passed",
+      "evidence": "方案、实现和模块文档均限定为单实例 provider、quota、usage。"
+    },
+    {
+      "task": "0.2",
+      "status": "passed",
+      "evidence": "React 仅使用固定 invoke；Rust cc_hub 是唯一网络出口。"
+    },
+    {
+      "task": "0.3",
+      "status": "passed",
+      "evidence": "diff 仅覆盖控制台、宿主适配、所需 feature 配置和知识库。"
+    },
+    {
+      "task": "1.1",
+      "status": "passed",
+      "evidence": "脱敏 OpenAPI 与只读 endpoint fixture 已建立。"
+    },
+    {
+      "task": "1.2",
+      "status": "passed",
+      "evidence": "授权的非关键停用 provider 以相同 is_enabled:false 完成 PATCH；返回 200、isEnabled:false，两个 operation/undo header 存在，复读状态未变；额度 fixture 仍以只读数据核验。"
+    },
+    {
+      "task": "1.3",
+      "status": "passed",
+      "evidence": "外部 API 手册和方案已记录目标实例确认的字段与分页事实。"
+    },
+    {
+      "task": "2.1",
+      "status": "passed",
+      "evidence": "Rust inline contract/client/error tests 覆盖 URL、固定路径、脱敏和 fixture。"
+    },
+    {
+      "task": "2.2",
+      "status": "passed",
+      "evidence": "配置与 credential 模块分离，token 不写入配置文件。"
+    },
+    {
+      "task": "2.3",
+      "status": "passed",
+      "evidence": "受限 client、固定 timeout、禁止重定向和严格 DTO 已实现。"
+    },
+    {
+      "task": "2.4",
+      "status": "passed",
+      "evidence": "精确 Tauri command 已注册，保存连接先验证后持久化。"
+    },
+    {
+      "task": "2.5",
+      "status": "passed",
+      "evidence": "cc_hub 模块按 config、credentials、client、contracts、commands 分层。"
+    },
+    {
+      "task": "3.1",
+      "status": "passed",
+      "evidence": "App、connection、API focused tests 覆盖连接和 token 不回显。"
+    },
+    {
+      "task": "3.2",
+      "status": "passed",
+      "evidence": "invoke bridge、connection hook 和设置组件已实现。"
+    },
+    {
+      "task": "3.3",
+      "status": "passed",
+      "evidence": "应用壳提供连接设置和三个主视图。"
+    },
+    {
+      "task": "3.4",
+      "status": "passed",
+      "evidence": "静态扫描未发现前端 token 存储或直接 fetch。"
+    },
+    {
+      "task": "4.1",
+      "status": "passed",
+      "evidence": "provider normalizer、筛选与行级锁定测试通过。"
+    },
+    {
+      "task": "4.2",
+      "status": "passed",
+      "evidence": "provider 窄 DTO、查询 hook 和 PATCH command bridge 已实现。"
+    },
+    {
+      "task": "4.3",
+      "status": "passed",
+      "evidence": "provider 表提供筛选、todayCallCount、状态与不可用字段显示。"
+    },
+    {
+      "task": "4.4",
+      "status": "passed",
+      "evidence": "provider 行级 pending/错误状态保持单一路径；授权 PATCH 返回与复读状态一致。"
+    },
+    {
+      "task": "5.1",
+      "status": "passed",
+      "evidence": "额度 normalizer 测试覆盖不限、未知、超额与剩余值。"
+    },
+    {
+      "task": "5.2",
+      "status": "passed",
+      "evidence": "Rust 逐用户额度基线与前端 quota hook 已实现。"
+    },
+    {
+      "task": "5.3",
+      "status": "passed",
+      "evidence": "quota 表与分页视图已实现且无写入控件。"
+    },
+    {
+      "task": "5.4",
+      "status": "passed",
+      "evidence": "缓存、结果失效和保守格式化行为有测试覆盖。"
+    },
+    {
+      "task": "6.1",
+      "status": "passed",
+      "evidence": "usage hook 测试覆盖轮询不重叠和陈旧响应丢弃。"
+    },
+    {
+      "task": "6.2",
+      "status": "passed",
+      "evidence": "白名单查询、filter options、服务器时区日界和稳定 id 已实现。"
+    },
+    {
+      "task": "6.3",
+      "status": "passed",
+      "evidence": "usage 表提供 cursor 历史页、手动刷新和受控自动刷新。"
+    },
+    {
+      "task": "6.4",
+      "status": "passed",
+      "evidence": "usage rows 直接使用已返回字段，没有日志名称补查。"
+    },
+    {
+      "task": "7.1",
+      "status": "passed",
+      "evidence": "静态安全扫描、命令边界与 fixture 脱敏核对通过。"
+    },
+    {
+      "task": "7.2",
+      "status": "passed",
+      "evidence": "模块文档与知识库索引已同步。"
+    },
+    {
+      "task": "7.3",
+      "status": "passed",
+      "evidence": "前端质量门和 Rust 核心 check 通过；原生 GUI test 限制已记录。"
+    }
+  ],
+  "tdd": {
+    "classification": "mandatory",
+    "decision": "tdd",
+    "target_behaviors": [
+      "连接 token 不回显与固定 Tauri invoke 命令",
+      "provider 查询、行级 pending 与运行时 PATCH 能力门控",
+      "额度不限、超额和未知值显示",
+      "usage cursor、稳定 id、可见性轮询和陈旧响应丢弃"
+    ],
+    "red": {
+      "command": "npm test -- --run focused CC Hub feature suites (pre-implementation)",
+      "result": "failed",
+      "summary": "新断言先暴露缺失的 invoke bridge、连接生命周期、provider 行状态、额度派生与 usage 轮询行为。"
+    },
+    "green": {
+      "command": "npm test -- --run src/features/cc-hub/useConnection.test.tsx src/features/cc-hub/normalizers.test.ts src/features/cc-hub/timeRange.test.ts src/features/cc-hub/usageQuery.test.ts src/features/cc-hub/useUsageLogs.test.ts src/features/cc-hub/useProviders.test.ts src/features/cc-hub/ProviderTable.test.tsx",
+      "result": "passed",
+      "summary": "最小实现后的 focused CC Hub 测试通过。"
+    },
+    "refactor": {
+      "performed": true,
+      "command": "npm test",
+      "result": "passed",
+      "summary": "完成 DTO 空值、cursor 分页、StrictMode 生命周期和跨服务器日界整理后，12 个 test files、24 项测试通过。"
+    },
+    "verify": {
+      "command": "npm test && npm run lint && npm run build",
+      "result": "passed",
+      "summary": "前端全量自动化、lint 和 production build 全部通过；Rust 核心 check 另见 commands。"
+    }
+  }
+}

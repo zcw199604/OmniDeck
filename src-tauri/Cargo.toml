@@ -15,5 +15,24 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 [build-dependencies]
 tauri-build = { version = "2.6.3" }
 
+[features]
+default = ["desktop"]
+desktop = [
+  "tauri/wry",
+  "tauri/compression",
+  "tauri/common-controls-v6",
+  "tauri/dynamic-acl",
+  "tauri/x11",
+  "tauri/dbus",
+]
+
 [dependencies]
-tauri = { version = "2.11.3" }
+tauri = { version = "=2.11.3", default-features = false }
+reqwest = { version = "=0.12.28", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.151"
+futures-util = "=0.3.31"
+url = "=2.5.8"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+keyring = { version = "=3.6.2", features = ["windows-native"] }

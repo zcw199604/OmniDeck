@@ -1,0 +1,7 @@
+{
+  "type": "urn:claude-code-hub:problem:auth.forbidden",
+  "title": "Forbidden",
+  "status": 403,
+  "errorCode": "auth.forbidden",
+  "errorParams": {}
+}

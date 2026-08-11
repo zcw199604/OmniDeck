@@ -1,0 +1,7 @@
+{
+  "limit5h": { "usage": 0, "limit": null },
+  "limitDaily": { "usage": 0, "limit": null },
+  "limitWeekly": { "usage": 0, "limit": null },
+  "limitMonthly": { "usage": 0, "limit": null },
+  "limitTotal": { "usage": 8.25, "limit": null }
+}

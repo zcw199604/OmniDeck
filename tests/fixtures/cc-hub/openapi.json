@@ -1,0 +1,105 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CC Hub v1 contract snapshot",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/providers": {
+      "get": {
+        "parameters": [
+          { "name": "q", "in": "query", "schema": { "type": "string" } },
+          { "name": "providerType", "in": "query", "schema": { "type": "string" } },
+          { "name": "include", "in": "query", "schema": { "type": "string" }, "description": "Supported value: statistics." }
+        ]
+      }
+    },
+    "/api/v1/providers/{id}": {
+      "patch": {
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "is_enabled": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "headers": {
+              "X-CCH-Operation-Id": { "schema": { "type": "string" } },
+              "X-CCH-Undo-Token": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "parameters": [
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "q", "in": "query", "schema": { "type": "string" } },
+          { "name": "status", "in": "query", "schema": { "type": "string" } }
+        ]
+      }
+    },
+    "/api/v1/users/{id}/limit-usage:all": {
+      "get": {
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ]
+      }
+    },
+    "/api/v1/users:usageBatch": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["userIds"],
+                "properties": {
+                  "userIds": { "type": "array", "items": { "type": "integer" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/usage-logs": {
+      "get": {
+        "parameters": [
+          { "name": "cursorCreatedAt", "in": "query", "schema": { "type": "string" } },
+          { "name": "cursorId", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "providerId", "in": "query", "schema": { "type": "number" } },
+          { "name": "userId", "in": "query", "schema": { "type": "number" } },
+          { "name": "model", "in": "query", "schema": { "type": "string" } },
+          { "name": "statusCode", "in": "query", "schema": { "type": "integer" } },
+          { "name": "endpoint", "in": "query", "schema": { "type": "string" } },
+          { "name": "startTime", "in": "query", "schema": { "type": "number" }, "description": "Milliseconds since Unix epoch." },
+          { "name": "endTime", "in": "query", "schema": { "type": "number" }, "description": "Milliseconds since Unix epoch." }
+        ]
+      }
+    },
+    "/api/v1/usage-logs/filter-options": {
+      "get": {}
+    },
+    "/api/v1/system/timezone": {
+      "get": {}
+    },
+    "/api/v1/system/display-settings": {
+      "get": {}
+    }
+  },
+  "x-fixture-note": "Sanitized, selected contract snapshot. It contains no instance URL, credential, key, user value, or upstream error detail."
+}

@@ -1,0 +1,5 @@
+{
+  "models": ["claude-test", "gpt-test"],
+  "statusCodes": [200, 429],
+  "endpoints": ["anthropic-messages", "openai-responses"]
+}

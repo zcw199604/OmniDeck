@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "id": 201,
+      "name": "Quota User",
+      "role": "user",
+      "isEnabled": true,
+      "limitTotalUsd": 25,
+      "limitDailyUsd": null,
+      "limitMonthlyUsd": null,
+      "limit5hUsd": null,
+      "limitWeeklyUsd": null
+    }
+  ],
+  "pageInfo": {
+    "nextCursor": null,
+    "hasMore": false,
+    "limit": 25
+  }
+}

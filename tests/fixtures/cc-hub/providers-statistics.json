@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": 101,
+      "name": "Primary Claude",
+      "providerType": "anthropic",
+      "isEnabled": true,
+      "todayCallCount": 37,
+      "todayTotalCostUsd": "1.234500",
+      "statistics": {
+        "todayCalls": 37,
+        "todayCost": "1.234500",
+        "lastCallModel": "claude-test",
+        "lastCallTime": "2026-08-10T08:00:00.000Z"
+      },
+      "weight": 1,
+      "priority": 10
+    },
+    {
+      "id": 102,
+      "name": "Standby OpenAI",
+      "providerType": "openai",
+      "isEnabled": false,
+      "todayCallCount": 0,
+      "todayTotalCostUsd": "0.000000",
+      "statistics": {
+        "todayCalls": 0,
+        "todayCost": "0.000000",
+        "lastCallModel": "",
+        "lastCallTime": ""
+      },
+      "weight": 2,
+      "priority": 20
+    }
+  ]
+}

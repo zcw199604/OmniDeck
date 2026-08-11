@@ -1,6 +1,6 @@
 :root {
-  color: #e2e8f0;
-  background: #020617;
+  color: #1b2a32;
+  background: #eef1f2;
   font-family: Inter, "Segoe UI", system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,15 +16,31 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(14, 116, 144, 0.36), transparent 32rem),
-    radial-gradient(circle at 80% 85%, rgba(79, 70, 229, 0.28), transparent 28rem),
-    #020617;
+  background: #eef1f2;
 }
 
 button,
 input,
-textarea,
-select {
+select,
+textarea {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+  outline: 3px solid rgba(26, 128, 119, 0.35);
+  outline-offset: 2px;
 }

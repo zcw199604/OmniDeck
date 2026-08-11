@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": 401,
+      "createdAt": "2026-08-10T08:01:00.000Z",
+      "createdAtRaw": "2026-08-10T08:01:00.000Z",
+      "providerName": "Primary Claude",
+      "userName": "Quota User",
+      "keyName": "Primary key",
+      "model": "claude-test",
+      "originalModel": "claude-test",
+      "actualResponseModel": null,
+      "endpoint": "anthropic-messages",
+      "statusCode": 200,
+      "inputTokens": 1000,
+      "outputTokens": 200,
+      "costUsd": "0.123000",
+      "sessionId": "session-redacted",
+      "sourceSessionId": "source-redacted",
+      "requestSequence": 1
+    }
+  ],
+  "pageInfo": {
+    "nextCursor": "2026-08-10T08:00:00.000Z|400",
+    "hasMore": true,
+    "limit": 25
+  },
+  "sourceSessionIdsByIdentity": {}
+}

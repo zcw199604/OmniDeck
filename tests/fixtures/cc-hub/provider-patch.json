@@ -1,0 +1,17 @@
+{
+  "request": {
+    "is_enabled": true
+  },
+  "response": {
+    "id": 101,
+    "name": "Primary Claude",
+    "providerType": "anthropic",
+    "isEnabled": true,
+    "todayCallCount": 37
+  },
+  "responseHeaders": {
+    "X-CCH-Operation-Id": "<redacted>",
+    "X-CCH-Undo-Token": "<redacted>"
+  },
+  "verification": "Request field and response/header shape are confirmed by target OpenAPI. A live reversible mutation has not yet been authorized."
+}

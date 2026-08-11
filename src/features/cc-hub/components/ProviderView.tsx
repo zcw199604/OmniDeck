@@ -27,58 +27,58 @@ export default function ProviderView({ connected, canWrite }: ProviderViewProps)
     <section className="view-section" aria-labelledby="providers-title">
       <div className="view-heading">
         <div>
-          <p className="eyebrow">Operations</p>
-          <h2 id="providers-title">Providers</h2>
-          <p className="view-summary">Manage provider availability and inspect today&apos;s confirmed call count.</p>
+          <p className="eyebrow">运营</p>
+          <h2 id="providers-title">服务商</h2>
+          <p className="view-summary">管理服务商可用状态，并查看今日已确认的调用次数。</p>
         </div>
         <button className="toolbar-button" disabled={providersModel.loading} onClick={() => void providersModel.reload()} type="button">
-          {providersModel.loading ? 'Loading...' : 'Refresh'}
+          {providersModel.loading ? '加载中…' : '刷新'}
         </button>
       </div>
 
-      <div className="filter-bar" aria-label="Provider filters">
+      <div className="filter-bar" aria-label="服务商筛选">
         <label>
-          Name
+          名称
           <input
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search providers"
+            placeholder="搜索服务商"
             type="search"
             value={query}
           />
         </label>
         <label>
-          Type
+          类型
           <select onChange={(event) => setProviderType(event.target.value)} value={providerType}>
-            <option value="">All types</option>
+            <option value="">全部类型</option>
             {providerTypes.map((type) => <option key={type} value={type}>{type}</option>)}
           </select>
         </label>
         <label>
-          Status
+          状态
           <select
             onChange={(event) => setEnabledFilter(event.target.value as 'all' | 'enabled' | 'disabled')}
             value={enabledFilter}
           >
-            <option value="all">All statuses</option>
-            <option value="enabled">Enabled</option>
-            <option value="disabled">Disabled</option>
+            <option value="all">全部状态</option>
+            <option value="enabled">已启用</option>
+            <option value="disabled">已禁用</option>
           </select>
         </label>
       </div>
       {!canWrite ? (
-        <p className="inline-warning">Provider write controls are disabled pending reversible PATCH verification.</p>
+        <p className="inline-warning">服务商写入控制已禁用，等待可逆的 PATCH 验证通过。</p>
       ) : null}
 
       {providersModel.error ? (
         <div className="state-message error-state" role="alert">
-          <strong>Provider data unavailable</strong>
+          <strong>服务商数据不可用</strong>
           <span>{messageForCode(providersModel.error.code)}</span>
-          <button onClick={() => void providersModel.reload()} type="button">Try again</button>
+          <button onClick={() => void providersModel.reload()} type="button">重试</button>
         </div>
       ) : providersModel.loading && providersModel.providers.length === 0 ? (
-        <div className="state-message">Loading providers...</div>
+        <div className="state-message">正在加载服务商…</div>
       ) : providersModel.providers.length === 0 ? (
-        <div className="state-message">No providers match these filters.</div>
+        <div className="state-message">没有符合筛选条件的服务商。</div>
       ) : (
         <ProviderTable
           canToggle={canWrite}

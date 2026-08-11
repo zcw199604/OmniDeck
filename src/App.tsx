@@ -19,7 +19,7 @@ function App() {
   if (connection.loading) {
     return (
       <main className="setup-shell">
-        <p className="startup-state">Loading connection state...</p>
+        <p className="startup-state">正在加载连接状态…</p>
       </main>
     )
   }
@@ -30,8 +30,8 @@ function App() {
         <section className="setup-panel" aria-labelledby="connect-title">
           <div className="product-mark">
             <span className="product-kicker">OmniDeck</span>
-            <h1 id="connect-title">Connect CC Hub</h1>
-            <p>Configure one administrator connection to open the management console.</p>
+            <h1 id="connect-title">连接 CC Hub</h1>
+            <p>配置一个管理员连接以打开管理控制台。</p>
           </div>
           <ConnectionSettings
             connected={false}
@@ -53,10 +53,10 @@ function App() {
       <aside className="side-panel">
         <header className="product-header">
           <span className="product-kicker">OmniDeck</span>
-          <h1>CC Hub Console</h1>
+          <h1>CC Hub 控制台</h1>
           <p>{connection.state?.baseUrl}</p>
         </header>
-        <nav aria-label="Management views" className="view-tabs" role="tablist">
+        <nav aria-label="管理视图" className="view-tabs" role="tablist">
           <button
             aria-controls="providers-view"
             aria-selected={activeView === 'providers'}
@@ -65,7 +65,7 @@ function App() {
             role="tab"
             type="button"
           >
-            Providers
+            服务商
           </button>
           <button
             aria-controls="quota-view"
@@ -75,7 +75,7 @@ function App() {
             role="tab"
             type="button"
           >
-            Quota management
+            额度管理
           </button>
           <button
             aria-controls="usage-view"
@@ -85,11 +85,11 @@ function App() {
             role="tab"
             type="button"
           >
-            Usage details
+            用量明细
           </button>
         </nav>
         <details className="connection-details">
-          <summary>Connection settings</summary>
+          <summary>连接设置</summary>
           <ConnectionSettings
             connected
             error={connection.error}
@@ -102,7 +102,7 @@ function App() {
           />
         </details>
         <p className={`transport-note ${connection.state?.transportSecurity === 'secure' ? 'is-secure' : ''}`}>
-          {connection.state?.transportSecurity === 'secure' ? 'Secure transport' : 'Acknowledged HTTP transport'}
+          {connection.state?.transportSecurity === 'secure' ? '安全传输' : '已确认的 HTTP 传输'}
         </p>
       </aside>
 

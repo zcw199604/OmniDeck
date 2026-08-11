@@ -22,7 +22,7 @@ describe('ProviderTable', () => {
     )
 
     expect(screen.getByText('37')).toBeInTheDocument()
-    expect(screen.getByRole('switch', { name: 'Disable Primary' })).toBeDisabled()
+    expect(screen.getByRole('switch', { name: '禁用 Primary' })).toBeDisabled()
   })
   it('keeps provider writes disabled until live PATCH verification is recorded', () => {
     render(
@@ -42,7 +42,7 @@ describe('ProviderTable', () => {
       />,
     )
 
-    expect(screen.getByRole('switch', { name: 'Enable Secondary' })).toBeDisabled()
+    expect(screen.getByRole('switch', { name: '启用 Secondary' })).toBeDisabled()
   })
   it('enables a verified provider write when the row is not pending', () => {
     render(
@@ -62,6 +62,6 @@ describe('ProviderTable', () => {
       />,
     )
 
-    expect(screen.getByRole('switch', { name: 'Enable Verified' })).toBeEnabled()
+    expect(screen.getByRole('switch', { name: '启用 Verified' })).toBeEnabled()
   })
 })

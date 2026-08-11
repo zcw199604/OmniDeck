@@ -10,12 +10,12 @@ export default function QuotaTable({ items }: QuotaTableProps) {
       <table className="data-table quota-table">
         <thead>
           <tr>
-            <th scope="col">User</th>
-            <th scope="col">Used</th>
-            <th scope="col">Total</th>
-            <th scope="col">Today</th>
-            <th scope="col">This month</th>
-            <th scope="col">Remaining</th>
+            <th scope="col">用户</th>
+            <th scope="col">已用</th>
+            <th scope="col">总量</th>
+            <th scope="col">今日</th>
+            <th scope="col">本月</th>
+            <th scope="col">剩余</th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@ export default function QuotaTable({ items }: QuotaTableProps) {
                 {item.role ? <span className="secondary-cell">{item.role}</span> : null}
               </th>
               <td>{formatNumber(item.total.usage)}</td>
-              <td>{item.total.limit === null ? 'Unlimited' : formatNumber(item.total.limit)}</td>
+              <td>{item.total.limit === null ? '无限' : formatNumber(item.total.limit)}</td>
               <td>{formatNumber(item.today.usage)}</td>
               <td>{formatNumber(item.month.usage)}</td>
               <td>{formatRemaining(item.remaining.value, item.remaining.status)}</td>
@@ -39,7 +39,7 @@ export default function QuotaTable({ items }: QuotaTableProps) {
 }
 
 function formatNumber(value: number): string {
-  return Number.isFinite(value) ? value.toLocaleString(undefined, { maximumFractionDigits: 4 }) : 'Unavailable'
+  return Number.isFinite(value) ? value.toLocaleString(undefined, { maximumFractionDigits: 4 }) : '不可用'
 }
 
 function formatRemaining(
@@ -47,13 +47,13 @@ function formatRemaining(
   status: 'limited' | 'unlimited' | 'unavailable' | 'exceeded',
 ) {
   if (status === 'unlimited') {
-    return <span>Unlimited</span>
+    return <span>无限</span>
   }
   if (status === 'unavailable') {
-    return <span>Unavailable</span>
+    return <span>不可用</span>
   }
   if (status === 'exceeded') {
-    return <><span>{formatNumber(value ?? 0)}</span> <span className="status-warning">Exceeded</span></>
+    return <><span>{formatNumber(value ?? 0)}</span> <span className="status-warning">已超出</span></>
   }
   return formatNumber(value ?? 0)
 }

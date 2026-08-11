@@ -23,7 +23,7 @@ describe('UsageTable', () => {
     )
 
     expect(screen.getByRole('row', { name: /primary.*claude-test/i })).toHaveAttribute('data-log-id', '401')
-    expect(screen.getByRole('columnheader', { name: 'Cost' })).toBeInTheDocument()
-    expect(screen.queryByRole('columnheader', { name: 'Key' })).not.toBeInTheDocument()
+    expect(screen.getByRole('columnheader', { name: '费用' })).toBeInTheDocument()
+    expect(screen.queryByRole('columnheader', { name: '密钥' })).not.toBeInTheDocument()
   })
 })

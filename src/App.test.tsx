@@ -20,8 +20,8 @@ describe('App', () => {
   it('shows only the protected connection setup before management data can load', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: 'Connect CC Hub' })).toBeInTheDocument()
-    expect(screen.queryByRole('tab', { name: 'Providers' })).not.toBeInTheDocument()
-    expect(screen.getByLabelText('Admin token')).toHaveAttribute('type', 'password')
+    expect(screen.getByRole('heading', { name: '连接 CC Hub' })).toBeInTheDocument()
+    expect(screen.queryByRole('tab', { name: '服务商' })).not.toBeInTheDocument()
+    expect(screen.getByLabelText('管理员令牌')).toHaveAttribute('type', 'password')
   })
 })

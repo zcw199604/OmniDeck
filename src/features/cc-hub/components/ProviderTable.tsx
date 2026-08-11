@@ -18,18 +18,18 @@ export default function ProviderTable({
       <table className="data-table">
         <thead>
           <tr>
-            <th scope="col">Provider</th>
-            <th scope="col">Type</th>
-            <th scope="col">Weight / priority</th>
-            <th scope="col">Status</th>
-            <th scope="col">Today calls</th>
-            <th scope="col"><span className="visually-hidden">Controls</span></th>
+            <th scope="col">服务商</th>
+            <th scope="col">类型</th>
+            <th scope="col">权重 / 优先级</th>
+            <th scope="col">状态</th>
+            <th scope="col">今日调用</th>
+            <th scope="col"><span className="visually-hidden">操作</span></th>
           </tr>
         </thead>
         <tbody>
           {providers.map((provider) => {
             const pending = pendingIds.has(provider.id)
-            const nextLabel = provider.isEnabled ? 'Disable' : 'Enable'
+            const nextLabel = provider.isEnabled ? '禁用' : '启用'
             return (
               <tr key={provider.id}>
                 <th scope="row">{provider.name}</th>
@@ -37,7 +37,7 @@ export default function ProviderTable({
                 <td>{formatPriority(provider)}</td>
                 <td>
                   <span className={`status-badge ${provider.isEnabled ? 'is-enabled' : 'is-disabled'}`}>
-                    {provider.isEnabled ? 'Enabled' : 'Disabled'}
+                    {provider.isEnabled ? '已启用' : '已禁用'}
                   </span>
                 </td>
                 <td>{provider.todayCallCount.toLocaleString()}</td>
@@ -62,7 +62,7 @@ export default function ProviderTable({
 
 function formatPriority(provider: ProviderRow): string {
   if (provider.weight == null && provider.priority == null) {
-    return 'Unavailable'
+    return '不可用'
   }
   return `${provider.weight ?? '-'} / ${provider.priority ?? '-'}`
 }

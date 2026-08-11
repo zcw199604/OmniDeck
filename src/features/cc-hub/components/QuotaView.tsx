@@ -47,30 +47,30 @@ export default function QuotaView({ connected }: QuotaViewProps) {
     <section className="view-section" aria-labelledby="quota-title">
       <div className="view-heading">
         <div>
-          <p className="eyebrow">Limits</p>
-          <h2 id="quota-title">Quota management</h2>
-          <p className="view-summary">Read-only total, daily, monthly, and remaining usage by user.</p>
+          <p className="eyebrow">限额</p>
+          <h2 id="quota-title">额度管理</h2>
+          <p className="view-summary">按用户查看只读的总额度、每日、每月及剩余用量。</p>
         </div>
         <button className="toolbar-button" disabled={quotaModel.loading} onClick={() => void quotaModel.refresh()} type="button">
-          {quotaModel.loading ? 'Loading...' : 'Refresh'}
+          {quotaModel.loading ? '加载中…' : '刷新'}
         </button>
       </div>
 
-      <div className="filter-bar" aria-label="Quota user filters">
+      <div className="filter-bar" aria-label="额度用户筛选">
         <label>
-          User
+          用户
           <input
             onChange={(event) => {
               setQuery(event.target.value)
               resetPagination()
             }}
-            placeholder="Search users"
+            placeholder="搜索用户"
             type="search"
             value={query}
           />
         </label>
         <label>
-          Status
+          状态
           <select
             onChange={(event) => {
               setStatus(event.target.value)
@@ -78,36 +78,36 @@ export default function QuotaView({ connected }: QuotaViewProps) {
             }}
             value={status}
           >
-            <option value="">All statuses</option>
-            <option value="enabled">Enabled</option>
-            <option value="disabled">Disabled</option>
-            <option value="active">Active</option>
-            <option value="expired">Expired</option>
+            <option value="">全部状态</option>
+            <option value="enabled">已启用</option>
+            <option value="disabled">已禁用</option>
+            <option value="active">活跃</option>
+            <option value="expired">已过期</option>
           </select>
         </label>
       </div>
 
       {quotaModel.error ? (
         <div className="state-message error-state" role="alert">
-          <strong>Quota data unavailable</strong>
+          <strong>额度数据不可用</strong>
           <span>{messageForCode(quotaModel.error.code)}</span>
-          <button onClick={() => void quotaModel.refresh()} type="button">Try again</button>
+          <button onClick={() => void quotaModel.refresh()} type="button">重试</button>
         </div>
       ) : quotaModel.loading && !quotaModel.page ? (
-        <div className="state-message">Loading quota users...</div>
+        <div className="state-message">正在加载额度用户…</div>
       ) : quotaModel.page?.items.length ? (
         <>
           <QuotaTable items={quotaModel.page.items} />
-          <div className="pagination" aria-label="Quota pagination">
-            <span>Page {history.length + 1}</span>
+          <div className="pagination" aria-label="额度分页">
+            <span>第 {history.length + 1} 页</span>
             <div>
-              <button disabled={history.length === 0 || quotaModel.loading} onClick={previousPage} type="button">Previous</button>
-              <button disabled={!quotaModel.page.pageInfo.nextCursor || quotaModel.loading} onClick={nextPage} type="button">Next</button>
+              <button disabled={history.length === 0 || quotaModel.loading} onClick={previousPage} type="button">上一页</button>
+              <button disabled={!quotaModel.page.pageInfo.nextCursor || quotaModel.loading} onClick={nextPage} type="button">下一页</button>
             </div>
           </div>
         </>
       ) : (
-        <div className="state-message">No quota users match these filters.</div>
+        <div className="state-message">没有符合筛选条件的额度用户。</div>
       )}
     </section>
   )

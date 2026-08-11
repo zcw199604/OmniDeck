@@ -15,29 +15,29 @@ export default function UsageTable({ items }: UsageTableProps) {
       <table className="data-table usage-table">
         <thead>
           <tr>
-            <th scope="col">Time</th>
-            <th scope="col">Provider</th>
-            {hasUser ? <th scope="col">User</th> : null}
-            {hasKey ? <th scope="col">Key</th> : null}
-            <th scope="col">Model</th>
-            <th scope="col">Endpoint</th>
-            <th scope="col">Status</th>
-            {hasTokens ? <th scope="col">Tokens</th> : null}
-            {hasCost ? <th scope="col">Cost</th> : null}
+            <th scope="col">时间</th>
+            <th scope="col">服务商</th>
+            {hasUser ? <th scope="col">用户</th> : null}
+            {hasKey ? <th scope="col">密钥</th> : null}
+            <th scope="col">模型</th>
+            <th scope="col">接口</th>
+            <th scope="col">状态</th>
+            {hasTokens ? <th scope="col">Token 数</th> : null}
+            {hasCost ? <th scope="col">费用</th> : null}
           </tr>
         </thead>
         <tbody>
           {items.map((item) => (
             <tr data-log-id={String(item.id)} key={item.id}>
               <td>{formatTime(item.occurredAt)}</td>
-              <td>{item.providerName ?? 'Unavailable'}</td>
-              {hasUser ? <td>{item.userName ?? 'Unavailable'}</td> : null}
-              {hasKey ? <td>{item.keyName ?? 'Unavailable'}</td> : null}
-              <td>{item.model ?? 'Unavailable'}</td>
-              <td>{item.endpoint ?? 'Unavailable'}</td>
-              <td>{item.statusCode ?? 'Unavailable'}</td>
+              <td>{item.providerName ?? '不可用'}</td>
+              {hasUser ? <td>{item.userName ?? '不可用'}</td> : null}
+              {hasKey ? <td>{item.keyName ?? '不可用'}</td> : null}
+              <td>{item.model ?? '不可用'}</td>
+              <td>{item.endpoint ?? '不可用'}</td>
+              <td>{item.statusCode ?? '不可用'}</td>
               {hasTokens ? <td>{formatTokens(item)}</td> : null}
-              {hasCost ? <td>{item.costUsd ?? 'Unavailable'}</td> : null}
+              {hasCost ? <td>{item.costUsd ?? '不可用'}</td> : null}
             </tr>
           ))}
         </tbody>
@@ -53,7 +53,7 @@ function formatTime(value: string): string {
 
 function formatTokens(item: UsageLogRow): string {
   if (item.inputTokens === undefined && item.outputTokens === undefined) {
-    return 'Unavailable'
+    return '不可用'
   }
-  return `${item.inputTokens?.toLocaleString() ?? '-'} in / ${item.outputTokens?.toLocaleString() ?? '-'} out`
+  return `${item.inputTokens?.toLocaleString() ?? '-'} 入 / ${item.outputTokens?.toLocaleString() ?? '-'} 出`
 }

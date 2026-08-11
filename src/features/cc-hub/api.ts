@@ -106,25 +106,25 @@ function asRecord(value: unknown): Record<string, unknown> | undefined {
 export function messageForCode(code: string): string {
   switch (code) {
     case 'invalid_base_url':
-      return 'Enter a valid HTTP or HTTPS base URL.'
+      return '请输入有效的 HTTP 或 HTTPS 基础地址。'
     case 'insecure_transport':
-      return 'HTTP is allowed only for an acknowledged local or private connection.'
+      return '仅允许在已确认的本地或私有连接中使用 HTTP。'
     case 'unauthorized':
-      return 'The administrator token was not accepted.'
+      return '管理员令牌未被接受。'
     case 'forbidden':
-      return 'The token does not have the required administrator access.'
+      return '该令牌不具备所需的管理员访问权限。'
     case 'not_configured':
     case 'credential_missing':
-      return 'Connect a CC Hub instance before loading management data.'
+      return '请先连接 CC Hub 实例，再加载管理数据。'
     case 'request_timeout':
-      return 'The CC Hub request timed out.'
+      return 'CC Hub 请求超时。'
     case 'network_error':
-      return 'The CC Hub instance could not be reached.'
+      return '无法访问 CC Hub 实例。'
     case 'upstream_contract_mismatch':
-      return 'The CC Hub response does not match the supported API contract.'
+      return 'CC Hub 响应与受支持的 API 契约不匹配。'
     case 'credential_store_unavailable':
-      return 'The system credential store is unavailable.'
+      return '系统凭据存储不可用。'
     default:
-      return 'The CC Hub request could not be completed.'
+      return 'CC Hub 请求无法完成。'
   }
 }

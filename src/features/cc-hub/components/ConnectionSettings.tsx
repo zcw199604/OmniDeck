@@ -65,16 +65,16 @@ export default function ConnectionSettings({
       <div className="section-heading">
         <div>
           <p className="eyebrow">CC Hub</p>
-          <h2 id="connection-title">Connection</h2>
+          <h2 id="connection-title">连接</h2>
         </div>
         <span className={`connection-status ${connected ? 'is-connected' : 'is-disconnected'}`}>
-          {connected ? 'Connected' : 'Not connected'}
+          {connected ? '已连接' : '未连接'}
         </span>
       </div>
 
       <form className="connection-form" onSubmit={submit}>
         <label>
-          Base URL
+          基础地址
           <input
             autoComplete="url"
             inputMode="url"
@@ -87,7 +87,7 @@ export default function ConnectionSettings({
           />
         </label>
         <label>
-          Admin token
+          管理员令牌
           <input
             autoComplete="off"
             name="adminToken"
@@ -104,20 +104,20 @@ export default function ConnectionSettings({
             onChange={(event) => setAllowInsecureHttp(event.target.checked)}
             type="checkbox"
           />
-          Allow acknowledged local or private HTTP
+          允许已确认的本地或私有 HTTP 连接
         </label>
         {error ? <p className="form-error" role="alert">{messageForCode(error.code)}</p> : null}
         <div className="form-actions">
           <button disabled={saving} type="submit">
-            {saving ? 'Saving...' : connected ? 'Replace connection' : 'Save connection'}
+            {saving ? '保存中…' : connected ? '替换连接' : '保存连接'}
           </button>
           {connected ? (
             <>
               <button disabled={saving} onClick={() => void testCurrentConnection()} type="button">
-                Test connection
+                测试连接
               </button>
               <button className="danger-button" disabled={saving} onClick={() => void removeCurrentConnection()} type="button">
-                Remove connection
+                移除连接
               </button>
             </>
           ) : null}

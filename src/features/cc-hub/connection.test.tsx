@@ -30,7 +30,7 @@ describe('ConnectionSettings', () => {
       />,
     )
 
-    const token = screen.getByLabelText('Admin token')
+    const token = screen.getByLabelText('管理员令牌')
     expect(token).toHaveAttribute('type', 'password')
     expect(token).toHaveValue('')
     expect(screen.queryByText(/transient-test-token|secret upstream detail/i)).not.toBeInTheDocument()

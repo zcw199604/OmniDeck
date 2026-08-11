@@ -27,8 +27,8 @@ describe('QuotaTable', () => {
       />,
     )
 
-    expect(screen.getAllByText('Unlimited')).toHaveLength(2)
-    expect(screen.getByText('Exceeded')).toBeInTheDocument()
+    expect(screen.getAllByText('无限')).toHaveLength(2)
+    expect(screen.getByText('已超出')).toBeInTheDocument()
     expect(screen.getAllByText('0')).toHaveLength(1)
   })
 })

@@ -108,11 +108,11 @@ export default function UsageView({ connected }: UsageViewProps) {
     <section className="view-section" aria-labelledby="usage-title">
       <div className="view-heading">
         <div>
-          <p className="eyebrow">Audit</p>
-          <h2 id="usage-title">Usage details</h2>
+          <p className="eyebrow">审计</p>
+          <h2 id="usage-title">用量明细</h2>
           <p className="view-summary">
-            Latest records refresh every 10 seconds while this view is visible.
-            {filterOptions.options ? ` Server time zone: ${filterOptions.options.timeZone}.` : ''}
+            当前视图可见时，最新记录每 10 秒自动刷新一次。
+            {filterOptions.options ? ` 服务器时区：${filterOptions.options.timeZone}。` : ''}
           </p>
         </div>
         <div className="view-actions">
@@ -123,17 +123,17 @@ export default function UsageView({ connected }: UsageViewProps) {
               onChange={(event) => setAutoRefresh(event.target.checked)}
               type="checkbox"
             />
-            Auto refresh
+            自动刷新
           </label>
           <button className="toolbar-button" disabled={usageModel.loading || usageModel.refreshing} onClick={() => void usageModel.refresh()} type="button">
-            {usageModel.refreshing ? 'Refreshing...' : 'Refresh'}
+            {usageModel.refreshing ? '刷新中…' : '刷新'}
           </button>
         </div>
       </div>
 
-      <div className="filter-bar usage-filters" aria-label="Usage log filters">
+      <div className="filter-bar usage-filters" aria-label="用量日志筛选">
         <label>
-          Provider ID
+          服务商 ID
           <input
             inputMode="numeric"
             onChange={(event) => {
@@ -145,7 +145,7 @@ export default function UsageView({ connected }: UsageViewProps) {
           />
         </label>
         <label>
-          User ID
+          用户 ID
           <input
             inputMode="numeric"
             onChange={(event) => {
@@ -157,28 +157,28 @@ export default function UsageView({ connected }: UsageViewProps) {
           />
         </label>
         <label>
-          Model
+          模型
           <select onChange={(event) => { setModel(event.target.value); resetToLatest() }} value={model}>
-            <option value="">All models</option>
+            <option value="">全部模型</option>
             {filterOptions.options?.models.map((option) => <option key={option} value={option}>{option}</option>)}
           </select>
         </label>
         <label>
-          Status
+          状态
           <select onChange={(event) => { setStatusCode(event.target.value); resetToLatest() }} value={statusCode}>
-            <option value="">All statuses</option>
+            <option value="">全部状态</option>
             {filterOptions.options?.statusCodes.map((option) => <option key={option} value={option}>{option}</option>)}
           </select>
         </label>
         <label>
-          Endpoint
+          接口
           <select onChange={(event) => { setEndpoint(event.target.value); resetToLatest() }} value={endpoint}>
-            <option value="">All endpoints</option>
+            <option value="">全部接口</option>
             {filterOptions.options?.endpoints.map((option) => <option key={option} value={option}>{option}</option>)}
           </select>
         </label>
         <label>
-          Start (ms)
+          开始（毫秒）
           <input
             inputMode="numeric"
             onChange={(event) => { setStartTime(event.target.value); resetToLatest() }}
@@ -187,7 +187,7 @@ export default function UsageView({ connected }: UsageViewProps) {
           />
         </label>
         <label>
-          End (ms)
+          结束（毫秒）
           <input
             inputMode="numeric"
             onChange={(event) => { setEndTime(event.target.value); resetToLatest() }}
@@ -197,31 +197,31 @@ export default function UsageView({ connected }: UsageViewProps) {
         </label>
       </div>
 
-      {filterOptions.error ? <p className="inline-warning">Some filter choices are unavailable.</p> : null}
+      {filterOptions.error ? <p className="inline-warning">部分筛选选项不可用。</p> : null}
       {usageModel.error ? (
         <div className="state-message error-state" role="alert">
-          <strong>Usage data unavailable</strong>
+          <strong>用量数据不可用</strong>
           <span>{messageForCode(usageModel.error.code)}</span>
-          <button onClick={() => void usageModel.refresh()} type="button">Try again</button>
+          <button onClick={() => void usageModel.refresh()} type="button">重试</button>
         </div>
       ) : usageModel.loading && !usageModel.page ? (
-        <div className="state-message">Loading usage records...</div>
+        <div className="state-message">正在加载用量记录…</div>
       ) : usageModel.page?.items.length ? (
         <>
           <UsageTable items={usageModel.page.items} />
           {usageModel.page.pageInfo.hasMore && !nextCursor ? (
-            <p className="inline-warning">The next cursor is not supported by this contract snapshot.</p>
+            <p className="inline-warning">当前契约快照不支持下一页游标。</p>
           ) : null}
-          <div className="pagination" aria-label="Usage pagination">
-            <span>{usageModel.updatedAt ? `Updated ${new Date(usageModel.updatedAt).toLocaleTimeString()}` : 'Not refreshed yet'}</span>
+          <div className="pagination" aria-label="用量分页">
+            <span>{usageModel.updatedAt ? `更新于 ${new Date(usageModel.updatedAt).toLocaleTimeString()}` : '尚未刷新'}</span>
             <div>
-              <button disabled={history.length === 0 || usageModel.loading} onClick={previousPage} type="button">Previous</button>
-              <button disabled={!nextCursor || usageModel.loading} onClick={nextPage} type="button">Next</button>
+              <button disabled={history.length === 0 || usageModel.loading} onClick={previousPage} type="button">上一页</button>
+              <button disabled={!nextCursor || usageModel.loading} onClick={nextPage} type="button">下一页</button>
             </div>
           </div>
         </>
       ) : (
-        <div className="state-message">No usage records match these filters.</div>
+        <div className="state-message">没有符合筛选条件的用量记录。</div>
       )}
     </section>
   )
